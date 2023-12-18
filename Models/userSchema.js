@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema({
    fatherPhone:Number,
    emergencyPhone:Number,
    role:String,
-   isPasswordHidden:Boolean,
    dateOfBirth:String,
    age:Number,
    qualification:String,
