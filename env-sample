@@ -1,10 +1,10 @@
-NODE_ENV = 'production'
-PORT = 9091
-DB_URI = ///////////////
-JwtSecret = /////
-CorsCredentials = true
-CorsOrigin = true
-AWS_ACCESS_KEY = ////
-AWS_SECRET_ACCESS_KEY = /////
-AWS_BUCKET = bucket-name
-
+DB_URI=mongodb+srv://itxtaha227:IF3xvBlVqABp9x24@cluster0.frlmi8v.mongodb.net/cms-system?retryWrites=true&w=majority
+JwtSecret=taha123
+CorsCredentials=true
+CorsOrigin=true
+STRIPE_SECRET_KEY=sk_test_51NtQ96IWflQrLHke9lK2TRy7euZPamatgPebxOEHmACneDK6lweNBgFMR1fX6EvkO4K5JSNchdM2gIrM4V4BKTng00ZvzlVJw9
+app_id=1707894
+key=e961a703c89b35a95870
+secret=4bd1a4da16cffa0e95ec
+cluster=ap2
+apiKey=32EEDAC2B5805E433EC6628D28F283217E4694D78D0151E945D0DBD07949B2A3EDD3276DB2C90BED2852101FA71AC053
