@@ -17,11 +17,11 @@ const userSignUp = (req, res, next) => {
         fatherPhone,
         emergencyPhone,
         role,
-        isPasswordHidden,
+        // isPasswordHidden,
         dateOfBirth,
-        Age,
-        qualificaton,
-        otherQualification,
+        age,
+        qualification,
+        otherQualifications,
         courseAllowed,
     } = req.body;
 
@@ -51,11 +51,11 @@ const userSignUp = (req, res, next) => {
                         fatherPhone,
                         emergencyPhone,
                         role,
-                        isPasswordHidden,
+                        // isPasswordHidden,
                         dateOfBirth,
-                        Age,
-                        qualificaton,
-                        otherQualification,                
+                        age,
+                        qualification,
+                        otherQualifications,                
                         courseAllowed,
                     });
                     // console.log(User);

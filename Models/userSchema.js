@@ -16,9 +16,9 @@ const userSchema = new mongoose.Schema({
    role:String,
    isPasswordHidden:Boolean,
    dateOfBirth:String,
-   Age:Number,
-   qualificaton:String,
-   otherQualification:[],
+   age:Number,
+   qualification:String,
+   otherQualifications:[],
    courseAllowed:Number,
 
    
