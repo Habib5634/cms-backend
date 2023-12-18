@@ -14,12 +14,13 @@ import Model from '../Models/Model';
 // FacebookStrategy = FacebookSt.Strategy;
 
 const createToken = (user, res, next) => {
-    const { id, email, firstName, lastName } = user;
+    const { id, email, firstName, lastName, role } = user;
     const payload = {
         _id: id,
         email,
         firstName,
         lastName,
+        role,
         
 
     };
@@ -54,11 +55,10 @@ const userSignIn = (req, res, next) => {
             bcryptjs.compare(password, user.password).then(result => {
                 // if password match create payload
                 if (result) {
-                    // Add role information to the payload
+                    // Create payload without the role property
                     const payload = {
                         userId: user._id,
-                        email: user.email,
-                        role: user.role // assuming role is a property in UserModel
+                        email: user.email
                     };
 
                     createToken(payload, res, next);
@@ -74,6 +74,7 @@ const userSignIn = (req, res, next) => {
         }
     });
 };
+
 
 const getAlluser = (req, res) => {
     Model.UserModel.find()
