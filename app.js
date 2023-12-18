@@ -50,6 +50,8 @@ app.use('/content', Router.ContentSchema);
 
 app.use('/test', Router.TestRouter);
 
+// app.use('/cmsSystem', Router.cmsSystem);
+
 // i have implemented it in signup controller like this {next(new Error('Image is required'))}
 app.use(errorHandler);
 

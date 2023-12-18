@@ -19,7 +19,8 @@ const createToken = (user, res, next) => {
         _id: id,
         email,
         firstName,
-        lastName
+        lastName,
+        
 
     };
     console.log(payload);
@@ -53,7 +54,14 @@ const userSignIn = (req, res, next) => {
             bcryptjs.compare(password, user.password).then(result => {
                 // if password match create payload
                 if (result) {
-                    createToken(user, res, next);
+                    // Add role information to the payload
+                    const payload = {
+                        userId: user._id,
+                        email: user.email,
+                        role: user.role // assuming role is a property in UserModel
+                    };
+
+                    createToken(payload, res, next);
                 } else {
                     res.status(400);
                     next(new Error('Invalid Password'));
@@ -66,6 +74,7 @@ const userSignIn = (req, res, next) => {
         }
     });
 };
+
 const getAlluser = (req, res) => {
     Model.UserModel.find()
         .then(events => {
