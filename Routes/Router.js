@@ -4,7 +4,7 @@ import EventRouter from './event';
 import CourseRouter from './courses';
 import ContentSchema from './content';
 import TestRouter from './test';
-import cmsSystem from './cmsSystem';
+
 
 export default {
     SignupRouter,
@@ -13,5 +13,4 @@ export default {
     CourseRouter,
     ContentSchema,
     TestRouter,
-    cmsSystem,
 };

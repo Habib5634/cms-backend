@@ -1,5 +1,5 @@
 import express from 'express';
-import events from '../Controllers/testContent';
+import events from '../Controllers/cmsSystem';
 
 // auth middlewares for admin
 import isAdminMiddleware from '../Middlewares/isManager';
@@ -10,23 +10,29 @@ import isAdminMiddleware from '../Middlewares/isManager';
 
 const TestRouter = express.Router();
 
-TestRouter.post(
-    '/add',
+// TestRouter.post(
+//     '/add',
 
-    events.addTest,
-);
+//     events.addTest,
+// );
 
-TestRouter.get('/:Sid', events.getTest);
+// TestRouter.get('/:Sid', events.getTest);
 
-TestRouter.get('/:eid', events.getSingleTest);
+// TestRouter.get('/:eid', events.getSingleTest);
 
-// only admin can delete
-TestRouter.delete(
-    '/delete/:id',
+// // only admin can delete
+// TestRouter.delete(
+//     '/delete/:id',
+//     isAdminMiddleware.isManagerOwner,
+//     events.deleteTest,
+// );
+
+// TestRouter.patch('/edit/:id', events.editTest);
+
+TestRouter.get(
+    '/getallusers',
     isAdminMiddleware.isManagerOwner,
-    events.deleteTest,
+    events.getallusers
 );
-
-TestRouter.patch('/edit/:id', events.editTest);
 
 export default TestRouter;

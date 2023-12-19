@@ -13,7 +13,7 @@ signInRouter.post('/request-live', request.postNotification);
 
 signInRouter.post('/admin', adminSignIn);
 
-signInRouter.get('/getAllUsers', userSign.getAlluser);
+signInRouter.get('/', userSign.getAlluser);
 
 signInRouter.get('/getAllnotifications', request.getAllNotifications);
 
