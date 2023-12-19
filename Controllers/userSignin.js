@@ -16,7 +16,7 @@ import Model from '../Models/Model';
 const createToken = (user, res, next) => {
     const { id, email, firstName, lastName, role } = user;
     const payload = {
-        _id: id,
+        _id:id,
         email,
         firstName,
         lastName,
@@ -29,7 +29,7 @@ const createToken = (user, res, next) => {
     jwt.sign(
         payload,
         process.env.JwtSecret, {
-            expiresIn: '365d',
+            expiresIn: '1h',
         },
         (err, token) => {
             // Error Create the Token
@@ -57,11 +57,14 @@ const userSignIn = (req, res, next) => {
                 if (result) {
                     // Create payload without the role property
                     const payload = {
-                        userId: user._id,
-                        email: user.email
+                        userId: user._id,   
+                        email: user.email,
+                        firstName:user.firstName,
+                        lastName:user.lastName,
+                        role: user.role 
                     };
 
-                    createToken(payload, res, next);
+                    createToken(user, res, next);
                 } else {
                     res.status(400);
                     next(new Error('Invalid Password'));

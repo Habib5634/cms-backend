@@ -53,7 +53,7 @@ app.use('/test', Router.TestRouter);
 // i have implemented it in signup controller like this {next(new Error('Image is required'))}
 app.use(errorHandler);
 
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () =>
     console.log(`App listening On port http://localhost:${port}`),
