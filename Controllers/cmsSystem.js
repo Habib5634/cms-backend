@@ -1,6 +1,11 @@
 import status from 'http-status';
+<<<<<<< HEAD
 import userSchema from '../Models/userSchema';
 import coursesSchema from '../Models/coursesSchema';
+=======
+import userSignin from './userSignin';
+import userSchema from '../Models/userSchema';
+>>>>>>> 729ed6c88f0342cdacbb4b065bac905cac8cefe1
 
 
 const addCourses = (req, res) => {
@@ -36,6 +41,7 @@ const addCourses = (req, res) => {
 
 const getallusers = (req, res) => {
     userSchema.find()
+<<<<<<< HEAD
         .then(events => {
             res.status(status.OK).send(events);
         })
@@ -47,6 +53,20 @@ const getallusers = (req, res) => {
         });
 };
 
+=======
+      .then(users => {
+        if (users.length === 0) {
+          return res.status(404).json({ message: 'No users found' });
+        }
+  
+        res.status(200).json(users);
+      })
+      .catch(err => {
+        console.error('Error fetching users:', err);
+        res.status(500).json({ message: 'Internal server error' });
+      });
+  };
+>>>>>>> 729ed6c88f0342cdacbb4b065bac905cac8cefe1
 
 
 
