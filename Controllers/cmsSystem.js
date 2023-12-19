@@ -1,5 +1,6 @@
 import status from 'http-status';
 import userSignin from './userSignin';
+import userSchema from '../Models/userSchema';
 
 
 // const addCourse = (req, res) => {
@@ -31,18 +32,19 @@ import userSignin from './userSignin';
 // };
 
 const getallusers = (req, res) => {
-    userSignin.find()
-        .then(events => {
-            res.status(status.OK).send(events);
-        })
-        .catch(err => {
-            res.status(status.INTERNAL_SERVER_ERROR).send({
-                Message: 'No Events!',
-                err,
-            });
-        });
-};
-
+    userSchema.find()
+      .then(users => {
+        if (users.length === 0) {
+          return res.status(404).json({ message: 'No users found' });
+        }
+  
+        res.status(200).json(users);
+      })
+      .catch(err => {
+        console.error('Error fetching users:', err);
+        res.status(500).json({ message: 'Internal server error' });
+      });
+  };
 
 
 
