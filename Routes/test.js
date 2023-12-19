@@ -35,4 +35,14 @@ TestRouter.get(
     events.getallusers
 );
 
+
+TestRouter.post(
+    '/postcourses',
+    isAdminMiddleware.isManagerOwner,
+    events.addCourses
+);
+
+
+
+
 export default TestRouter;
