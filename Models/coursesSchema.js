@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
 const CourseSchema = new mongoose.Schema({
-    courseName: [],
+    courseName: String,
     courseDuration: Number,
     isFormOpen: Boolean,
     noOfQuiz:Number,
     feeInRupees:Number,
-    leadTrainerId:[],
-    assistantTrainers:[],
+    leadTrainerId:String,
+    assistantTrainers:String,
    
 
     
