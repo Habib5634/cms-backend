@@ -8,13 +8,13 @@ const addCourses = (req, res) => {
 
     const courses = new coursesSchema({
 
-       courseName,
-       courseDuration,
-       isFormOpen,
-       noOfQuiz,
-       feeInRupees,
-       leadTrainerId,
-       assistantTrainer,
+        courseName,
+        courseDuration,
+        isFormOpen,
+        noOfQuiz,
+        feeInRupees,
+        leadTrainerId,
+        assistantTrainer,
 
     });
     courses
@@ -52,5 +52,110 @@ const getallusers = (req, res) => {
 
 
 
-export default{getallusers,
-addCourses,};
+const getallcourses = (req, res) => {
+    coursesSchema.find()
+        .then(events => {
+            res.status(status.OK).send(events);
+        })
+        .catch(err => {
+            res.status(status.INTERNAL_SERVER_ERROR).send({
+                Message: 'No Events!',
+                err,
+            });
+        });
+};
+
+
+
+
+
+
+
+const getOnecourse = (req, res) => {
+    const { id } = req.params; // Assuming the city is passed as a parameter
+  
+    coursesSchema.findOne({ _id: id })
+      .then(course => {
+        if (course) {
+          res.status(status.OK).send(course);
+        } else {
+          res.status(status.NOT_FOUND).send({
+            Message: 'product not found.',
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(status.INTERNAL_SERVER_ERROR).send({
+          Message: 'Internal server error',
+          Error: err,
+        });
+      });
+  };
+
+
+
+  const patchcourse = async (req, res) => {
+    const { courseId } = req.params;
+  
+    try {
+      // Find the city by its ID
+      let course = await coursesSchema.findById(courseId);
+  
+      if (!course) {
+        // Return a 404 response with a message indicating that the city was not found
+        return res.status(404).json({ success: false, message: 'City not found' });
+      }
+  
+      // Update the existing city's settings with the provided data
+      course.set(req.body);
+      await course.save();
+  
+      res.status(200).json({ success: true, message: 'City settings updated', data: course });
+    } catch (error) {
+      console.error('Error updating city settings:', error);
+      res.status(500).json({ success: false, message: 'Failed to update city settings' });
+    }
+  };
+
+
+
+
+  const getOneuser = (req, res) => {
+    const { id } = req.params; // Assuming the city is passed as a parameter
+  
+    userSchema.findOne({ _id: id })
+      .then(user => {
+        if (user) {
+          res.status(status.OK).send(user);
+        } else {
+          res.status(status.NOT_FOUND).send({
+            Message: 'product not found.',
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(status.INTERNAL_SERVER_ERROR).send({
+          Message: 'Internal server error',
+          Error: err,
+        });
+      });
+  };
+
+
+
+
+
+
+
+
+export default {
+
+    getallusers,
+    addCourses,
+    getallcourses,
+    getOnecourse,
+    patchcourse,
+    getOneuser,
+};

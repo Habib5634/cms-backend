@@ -44,5 +44,34 @@ TestRouter.post(
 
 
 
+TestRouter.get(
+  '/getallcourses',
+  events.getallcourses
+);
+
+
+
+TestRouter.get(
+    '/getonecourse/:id',
+    events.getOnecourse
+);
+
+
+TestRouter.patch(
+    '/patchcourse/:courseId',
+    isAdminMiddleware.isManagerOwner,
+    events.patchcourse
+);
+
+
+
+TestRouter.get(
+    '/getoneuser/:id',
+    isAdminMiddleware.isManagerOwner,
+    events.getOneuser
+);
+
+
+
 
 export default TestRouter;
