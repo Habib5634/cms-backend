@@ -5,7 +5,7 @@ import quizFormSchema from '../Models/quizFormSchema';
 
 
 const addCourses = (req, res) => {
-  const { courseName, courseDuration, isFormOpen, noOfQuiz, feeInRupees, leadTrainerId, assistantTrainer } = req.body;
+  const { courseName, courseDuration, isFormOpen, noOfQuiz, feeInRupees, leadTrainerId, assistantTrainers } = req.body;
 
   const courses = new coursesSchema({
 
@@ -15,7 +15,7 @@ const addCourses = (req, res) => {
     noOfQuiz,
     feeInRupees,
     leadTrainerId,
-    assistantTrainer,
+    assistantTrainers,
 
   });
   courses
