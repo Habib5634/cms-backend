@@ -72,6 +72,27 @@ TestRouter.get(
 );
 
 
+TestRouter.post(
+    '/addQuizForm',
+    isAdminMiddleware.isManagerOwner,
+    events.addQuizForm
+);
+
+
+TestRouter.get(
+    '/getallquizform',
+    events.getallQuizForm
+);
+
+
+
+TestRouter.get(
+    '/getonequizform/:id',
+    events.getOneQuizForm
+);
+
+
+
 
 
 export default TestRouter;
