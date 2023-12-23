@@ -2,6 +2,7 @@ import status from 'http-status';
 import userSchema from '../Models/userSchema';
 import coursesSchema from '../Models/coursesSchema';
 import quizFormSchema from '../Models/quizFormSchema';
+import quizResultSchema from '../Models/quizResultSchema';
 
 
 const addCourses = (req, res) => {
@@ -220,6 +221,37 @@ const getOneQuizForm = (req, res) => {
 
 
 
+const addQuizResult = (req, res) => {
+  const { totalNumbers, quizSubmitted, user,  } = req.body;
+
+  const quizResult = new quizResultSchema({
+
+    totalNumbers,
+    quizSubmitted,
+    user,
+
+  });
+  quizResult
+    .save()
+    .then(savedquizResult => {
+      res.status(status.OK).send({
+        savedquizResult,
+        Message: 'Event Created Successfully',
+        type: status.OK,
+      });
+    })
+    .catch(err => {
+      res.status(status.INTERNAL_SERVER_ERROR).send({
+        Message: status.INTERNAL_SERVER_ERROR,
+        err,
+      });
+    });
+};
+
+
+
+
+
 export default {
 
   getallusers,
@@ -231,5 +263,6 @@ export default {
   addQuizForm,
   getallQuizForm,
   getOneQuizForm,
+  addQuizResult,
 
 };

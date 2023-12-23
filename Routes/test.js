@@ -4,7 +4,7 @@ import events from '../Controllers/cmsSystem';
 // auth middlewares for admin
 import isAdminMiddleware from '../Middlewares/isManager';
 // auth middleware for user
-// import isLoggedInUser from '../Middlewares/loggedIn';
+ import isLoggedInUser from '../Middlewares/loggedIn';
 // // validations
 // import eventValidator from '../validations/event';
 
@@ -90,6 +90,15 @@ TestRouter.get(
     '/getonequizform/:id',
     events.getOneQuizForm
 );
+
+
+
+TestRouter.post(
+    '/addresult',
+    isLoggedInUser.isLoggedIn,
+    events.addQuizResult
+);
+
 
 
 
