@@ -5,11 +5,11 @@ const quizFormSchema = new mongoose.Schema({
     questions:
         [{
             correctAnswer: String,
-            duration: Number,
             options: [],
             totalMarks: Number, 
             question:String
         }],
+        duration: Number,
     courses:
         {
             type: mongoose.Schema.Types.ObjectId,
