@@ -101,5 +101,21 @@ TestRouter.post(
 
 
 
+TestRouter.patch(
+    '/patchresult/:quizResultId',
+    isLoggedInUser.isLoggedIn,
+    events.patchResults
+);
+
+
+TestRouter.get(
+    '/getoneresult/:id',
+    isAdminMiddleware.isManagerOwner,
+    events.getOneResult
+);
+
+
+
+
 
 export default TestRouter;
