@@ -35,7 +35,6 @@ const addCourses = (req, res) => {
       });
     });
 };
-
 const getallusers = (req, res) => {
   userSchema.find()
     .then(events => {
@@ -46,6 +45,8 @@ const getallusers = (req, res) => {
         Message: 'No Events!',
         err,
       });
+      return; // Add this line to exit the function
+      
     });
 };
 

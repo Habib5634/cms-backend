@@ -35,6 +35,11 @@ TestRouter.get(
     events.getallusers
 );
 
+TestRouter.get(
+    '/getallTeachers',
+    events.getallusers
+);
+
 
 TestRouter.post(
     '/postcourses',
