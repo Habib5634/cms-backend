@@ -308,6 +308,25 @@ const getOneResult = (req, res) => {
 
 
 
+const getAllResult= (req, res) => {
+  quizResultSchema.find()
+    .then(quizResult => {
+      res.status(status.OK).send(quizResult);
+    })
+    .catch(err => {
+      res.status(status.INTERNAL_SERVER_ERROR).send({
+        Message: 'No Events!',
+        err,
+      });
+    });
+};
+
+
+
+
+
+
+
 export default {
 
   getallusers,
@@ -322,5 +341,6 @@ export default {
   addQuizResult,
   patchResults,
   getOneResult,
+  getAllResult,
 
 };

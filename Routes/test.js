@@ -121,6 +121,13 @@ TestRouter.get(
 
 
 
+TestRouter.get(
+    '/getallresult',
+    events.getAllResult
+);
+
+
+
 
 
 export default TestRouter;
