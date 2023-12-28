@@ -31,7 +31,7 @@ const TestRouter = express.Router();
 
 TestRouter.get(
     '/getallusers',
-    isAdminMiddleware.isManagerOwner,
+    // isAdminMiddleware.isManagerOwner,
     events.getallusers
 );
 

@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
 const quizResultSchema = new mongoose.Schema({
-    totalNumbers:Number,
     quizSubmitted:Boolean,
     studentName:
             {

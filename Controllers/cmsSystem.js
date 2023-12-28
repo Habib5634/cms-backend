@@ -222,13 +222,16 @@ const getOneQuizForm = (req, res) => {
 
 
 const addQuizResult = (req, res) => {
-  const { totalNumbers, quizSubmitted, user,  } = req.body;
+  const { quizSubmitted, studentName, courseName, totalMarks, grade, result,  } = req.body;
 
   const quizResult = new quizResultSchema({
 
-    totalNumbers,
     quizSubmitted,
-    user,
+   studentName,
+   courseName,
+   totalMarks,
+   grade,
+   result,
 
   });
   quizResult
