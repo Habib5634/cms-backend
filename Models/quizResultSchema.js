@@ -8,7 +8,7 @@ const quizResultSchema = new mongoose.Schema({
                 ref: 'studentName',
             },
 
-            courseName:
+            courseId:
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'courseName',
