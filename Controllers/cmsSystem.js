@@ -223,13 +223,16 @@ const getOneQuizForm = (req, res) => {
 
 
 const addQuizResult = (req, res) => {
-  const { totalNumbers, quizSubmitted, user,  } = req.body;
+  const { quizSubmitted, studentName, courseName, totalMarks, grade, result,  } = req.body;
 
   const quizResult = new quizResultSchema({
 
-    totalNumbers,
     quizSubmitted,
-    user,
+   studentName,
+   courseName,
+   totalMarks,
+   grade,
+   result,
 
   });
   quizResult
@@ -253,6 +256,58 @@ const addQuizResult = (req, res) => {
 
 
 
+const patchResults   = async (req, res) => {
+  const { quizResultId } = req.params;
+
+  try {
+    // Find the city by its ID
+    let quizResult = await quizResultSchema.findById(quizResultId);
+
+    if (!quizResult) {
+      // Return a 404 response with a message indicating that the city was not found
+      return res.status(404).json({ success: false, message: 'City not found' });
+    }
+
+    // Update the existing city's settings with the provided data
+    quizResult.set(req.body);
+    await quizResult.save();
+
+    res.status(200).json({ success: true, message: 'City settings updated', data: quizResult });
+  } catch (error) {
+    console.error('Error updating city settings:', error);
+    res.status(500).json({ success: false, message: 'Failed to update city settings' });
+  }
+};
+
+
+
+const getOneResult = (req, res) => {
+  const { id } = req.params; // Assuming the city is passed as a parameter
+
+  quizResultSchema.findOne({ _id: id })
+    .then(quizResult => {
+      if (quizResult) {
+        res.status(status.OK).send(quizResult);
+      } else {
+        res.status(status.NOT_FOUND).send({
+          Message: 'product not found.',
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(status.INTERNAL_SERVER_ERROR).send({
+        Message: 'Internal server error',
+        Error: err,
+      });
+    });
+};
+
+
+
+
+
+
 export default {
 
   getallusers,
@@ -265,5 +320,7 @@ export default {
   getallQuizForm,
   getOneQuizForm,
   addQuizResult,
+  patchResults,
+  getOneResult,
 
 };
