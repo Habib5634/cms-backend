@@ -31,14 +31,14 @@ const TestRouter = express.Router();
 
 TestRouter.get(
     '/getallusers',
-    isAdminMiddleware.isManagerOwner,
+    // isAdminMiddleware.isManagerOwner,
     events.getallusers
 );
 
-TestRouter.get(
-    '/getallTeachers',
-    events.getallusers
-);
+// TestRouter.get(
+//     '/getallTeachers',
+//     events.getallusers
+// );
 
 
 TestRouter.post(
