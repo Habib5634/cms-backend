@@ -107,9 +107,9 @@ TestRouter.post(
 
 
 TestRouter.patch(
-    '/patchresult/:quizResultId',
+    '/patchquiz/:quizFormId',
     isLoggedInUser.isLoggedIn,
-    events.patchResults
+    events.patchQuizForm
 );
 
 

@@ -158,6 +158,7 @@ const addQuizForm = (req, res) => {
     questions,
     courses,
     duration,
+    
 
   });
   quizForm
@@ -256,23 +257,23 @@ const addQuizResult = (req, res) => {
 
 
 
-const patchResults   = async (req, res) => {
-  const { quizResultId } = req.params;
+const patchQuizForm  = async (req, res) => {
+  const { quizFormId } = req.params;
 
   try {
     // Find the city by its ID
-    let quizResult = await quizResultSchema.findById(quizResultId);
+    let quizForm = await quizFormSchema.findById(quizFormId);
 
-    if (!quizResult) {
+    if (!quizForm) {
       // Return a 404 response with a message indicating that the city was not found
       return res.status(404).json({ success: false, message: 'City not found' });
     }
 
     // Update the existing city's settings with the provided data
-    quizResult.set(req.body);
-    await quizResult.save();
+    quizForm.set(req.body);
+    await quizForm.save();
 
-    res.status(200).json({ success: true, message: 'City settings updated', data: quizResult });
+    res.status(200).json({ success: true, message: 'City settings updated', data: quizForm });
   } catch (error) {
     console.error('Error updating city settings:', error);
     res.status(500).json({ success: false, message: 'Failed to update city settings' });
@@ -339,7 +340,7 @@ export default {
   getallQuizForm,
   getOneQuizForm,
   addQuizResult,
-  patchResults,
+  patchQuizForm,
   getOneResult,
   getAllResult,
 
