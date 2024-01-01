@@ -158,11 +158,7 @@ const addQuizForm = (req, res) => {
     questions,
     courses,
     duration,
-<<<<<<< HEAD
     quizStatus
-=======
-    
->>>>>>> a9d1fb7acc3bd7ae510667c998faed766899cfb6
 
   });
   quizForm
