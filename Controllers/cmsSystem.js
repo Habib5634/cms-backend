@@ -1,10 +1,13 @@
 import status from 'http-status';
+import Pusher from 'pusher';
 import userSchema from '../Models/userSchema';
 import coursesSchema from '../Models/coursesSchema';
 import quizFormSchema from '../Models/quizFormSchema';
 import quizResultSchema from '../Models/quizResultSchema';
+import user from '../validations/user';
+import notificationSchema from '../Models/notificationSchema';
 
-
+require('dotenv').config();
 const addCourses = (req, res) => {
   const { courseName, courseDuration, isFormOpen, noOfQuiz, feeInRupees, leadTrainerId, assistantTrainers } = req.body;
 
@@ -325,6 +328,65 @@ const getAllResult= (req, res) => {
 
 
 
+const postCourses = (req, res) => {
+  const { courseName, courseDuration, isFormOpen, noOfQuiz, feeInRupees, leadTrainerId, assistantTrainers, teacherId, message, read, notifyToAdmin, courseId,  } = req.body;
+
+  // Assuming you have properly defined the addtoCartSchema model
+  const postCourses = new coursesSchema({
+    courseName,
+    courseDuration,
+    isFormOpen,
+    noOfQuiz,
+    feeInRupees,
+    leadTrainerId,
+    assistantTrainers,
+  });
+
+  postCourses
+    .save()
+    .then(savedcourses => {
+      const pusher = new Pusher({
+        appId: process.env.app_id,
+        key: process.env.key,
+        secret: process.env.secret,
+        cluster: process.env.cluster,
+        useTLS: true,
+      });
+      const newMessage = new notificationSchema({
+        teacherId,
+        message,
+        read,
+        notifyToAdmin,
+        courseId,
+      });
+      newMessage
+        .save()
+        .then(async (savedMessage) => {
+          await pusher.trigger('my-channel', 'my-event', {
+            message: `user booked the order`,
+          });
+          console.log(savedMessage);
+          res.status(200).json(savedMessage);
+        })
+        .catch((error) => {
+          console.error('Error saving message to the database:', error);
+          res.status(500).json({ message: 'Error saving message to database.', error: error.message });
+        });
+    })
+    .catch(err => {
+      res.status(500).json({
+        Message: 'Internal Server Error',
+        error: err.message, // Use err.message to capture the error message
+      });
+    });
+};
+
+
+
+
+
+
+
 
 
 
@@ -343,5 +405,6 @@ export default {
   patchQuizForm,
   getOneResult,
   getAllResult,
+ postCourses,
 
 };

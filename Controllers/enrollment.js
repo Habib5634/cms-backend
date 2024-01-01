@@ -24,77 +24,7 @@ import NotifySchema from '../Models/notificationSchema';
 // };
 
 
-const postNotification = (req, res) => {
-    const pusher = new Pusher({
-        appId: process.env.app_id,
-        key: process.env.key,
-        secret: process.env.secret,
-        cluster: process.env.cluster,
-        useTLS: true,
-    });
-    const event = new NotifySchema({
-        message: req.body.message,
-        userId: req.body.userId,
-        teacherId: req.body.teacherId
 
-    });
-    event.save()
-        .then(async events => {
-            await pusher.trigger('my-channel', 'my-event', {
-                message: req.body.message,
-                userId: req.body.userId
-
-            });
-            res.status(status.OK).send(events);
-        })
-        .catch(err => {
-            res.status(status.INTERNAL_SERVER_ERROR).send({
-                Message: 'No Events!',
-                err,
-            });
-        });
-};
-const addRequest = async(req, res) => {
-    try {
-        const { studentId, courseId } = req.body;
-
-        // Create a new live instructor request
-        const request = new InstructorSchema({
-            studentId,
-            course: courseId,
-        });
-
-        // Save the request to the database
-        await request.save();
-
-        // Get the course instructor's ID
-        const course = await CourseSchema.findById(courseId);
-        const instructorId = CourseSchema.instructorId;
-
-        // Get the instructor's device token from the User model
-        const instructor = await User.findById(instructorId);
-        const deviceToken = instructor.deviceToken;
-
-        // Send a push notification to the instructor using Pusher
-        const pusher = new Pusher({
-            appId: process.env.PUSHER_APP_ID,
-            key: process.env.PUSHER_APP_KEY,
-            secret: process.env.PUSHER_APP_SECRET,
-            cluster: process.env.PUSHER_APP_CLUSTER,
-            useTLS: true,
-        });
-
-        pusher.trigger(deviceToken, 'live-instructor-request', {
-            message: 'A new live instructor request has been submitted for your course',
-        });
-
-        // Return a success message to the frontend
-        return res.status(200).json({ message: 'Live instructor request submitted successfully' });
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Server error' });
-    }
-};
 
 
 
@@ -199,4 +129,4 @@ const RequestAccept = (req, res) => {
 };
 
 
-export default { addRequest, getSingleCourseStudent, postNotification, getAllNotifications, RequestAccept };
+export default { getSingleCourseStudent, getAllNotifications, RequestAccept };

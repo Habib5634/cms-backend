@@ -9,7 +9,7 @@ const signInRouter = express.Router();
 
 signInRouter.post('/', userValidator.userSignin, userSign.userSignIn);
 
-signInRouter.post('/request-live', request.postNotification);
+// signInRouter.post('/request-live', request.postNotification);
 
 signInRouter.post('/admin', adminSignIn);
 

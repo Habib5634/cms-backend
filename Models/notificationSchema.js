@@ -1,15 +1,9 @@
 import mongoose from 'mongoose';
 
 const pushNotificationSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-
-    },
     teacherId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-
+        ref: 'user',
     },
     message: {
         type: String,
@@ -23,12 +17,17 @@ const pushNotificationSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    link: {
-        type: String,
-        default: ''
-    }
+    notifyToAdmin: {
+        type: Boolean,
+        default: false,
+    },
+    courseId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'courseId'
+    },
+    status:Boolean,
 }, {
     timestamps: true,
-}, );
+});
 
 export default mongoose.model('Notifications', pushNotificationSchema);

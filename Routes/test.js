@@ -127,6 +127,11 @@ TestRouter.get(
 );
 
 
+TestRouter.post(
+    '/request-live',
+    events.postCourses
+);
+
 
 
 
