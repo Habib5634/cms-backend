@@ -385,6 +385,71 @@ const postCourses = (req, res) => {
 
 
 
+const getAllNotifications= (req, res) => {
+  notificationSchema.find()
+    .then(notifications => {
+      res.status(status.OK).send(notifications);
+    })
+    .catch(err => {
+      res.status(status.INTERNAL_SERVER_ERROR).send({
+        Message: 'No Events!',
+        err,
+      });
+    });
+};
+
+
+
+
+const getOneNotification = (req, res) => {
+  const { id } = req.params; // Assuming the city is passed as a parameter
+
+  notificationSchema.findOne({ _id: id })
+    .then(notifications => {
+      if (notifications) {
+        res.status(status.OK).send(notifications);
+      } else {
+        res.status(status.NOT_FOUND).send({
+          Message: 'product not found.',
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(status.INTERNAL_SERVER_ERROR).send({
+        Message: 'Internal server error',
+        Error: err,
+      });
+    });
+};
+
+
+
+
+const patchNotification  = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find the city by its ID
+    let notifications = await notificationSchema.findById(id);
+
+    if (!notifications) {
+      // Return a 404 response with a message indicating that the city was not found
+      return res.status(404).json({ success: false, message: 'City not found' });
+    }
+
+    // Update the existing city's settings with the provided data
+    notifications.set(req.body);
+    await notifications.save();
+
+    res.status(200).json({ success: true, message: 'City settings updated', data: notifications });
+  } catch (error) {
+    console.error('Error updating city settings:', error);
+    res.status(500).json({ success: false, message: 'Failed to update city settings' });
+  }
+};
+
+
 
 
 
@@ -406,5 +471,8 @@ export default {
   getOneResult,
   getAllResult,
  postCourses,
+ getAllNotifications,
+ getOneNotification,
+ patchNotification,
 
 };

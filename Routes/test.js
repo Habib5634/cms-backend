@@ -132,6 +132,22 @@ TestRouter.post(
     events.postCourses
 );
 
+TestRouter.get(
+    '/getallnotifications',
+    events.getAllNotifications
+);
+
+TestRouter.get(
+    '/getonenotification/:id',
+    events.getOneNotification
+);
+
+TestRouter.patch(
+    '/patchnotification/:id',
+    events.patchNotification
+);
+
+
 
 
 
