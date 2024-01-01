@@ -64,7 +64,7 @@ TestRouter.get(
 
 TestRouter.patch(
     '/patchcourse/:courseId',
-    isAdminMiddleware.isManagerOwner,
+    isLoggedInUser.isLoggedIn,
     events.patchcourse
 );
 
@@ -79,7 +79,7 @@ TestRouter.get(
 
 TestRouter.post(
     '/addQuizForm',
-    isAdminMiddleware.isManagerOwner,
+    isLoggedInUser.isLoggedIn,
     events.addQuizForm
 );
 

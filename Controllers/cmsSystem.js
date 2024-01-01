@@ -151,13 +151,14 @@ const getOneuser = (req, res) => {
 
 
 const addQuizForm = (req, res) => {
-  const { questions, courses, duration,  } = req.body;
+  const { questions, courses, duration,quizStatus  } = req.body;
 
   const quizForm = new quizFormSchema({
 
     questions,
     courses,
     duration,
+    quizStatus
 
   });
   quizForm
