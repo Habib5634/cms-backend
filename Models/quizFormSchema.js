@@ -18,6 +18,11 @@ const quizFormSchema = new mongoose.Schema({
     quizStatus:Boolean,
 
         status:Boolean,
+        userId:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user',
+        },
 
 }, {
     timestamps: true,

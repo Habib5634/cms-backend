@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
    qualification:String,
    otherQualifications:[],
    courseAllowed:Number,
+   enrolledCourses:[],
 
    
 }, {
