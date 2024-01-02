@@ -329,7 +329,7 @@ const getAllResult= (req, res) => {
 
 
 const postCourses = (req, res) => {
-  const { courseName, courseDuration, isFormOpen, noOfQuiz, feeInRupees, leadTrainerId, assistantTrainers, teacherId, message, read, notifyToAdmin, courseId,  } = req.body;
+  const { courseName, courseDuration, isFormOpen, noOfQuiz, feeInRupees, leadTrainerId, assistantTrainers, teacherId, message, read, notifyToAdmin, courseId, status, } = req.body;
 
   // Assuming you have properly defined the addtoCartSchema model
   const postCourses = new coursesSchema({
@@ -358,6 +358,7 @@ const postCourses = (req, res) => {
         read,
         notifyToAdmin,
         courseId,
+        status,
       });
       newMessage
         .save()
