@@ -328,11 +328,66 @@ const getAllResult= (req, res) => {
 
 
 
-const postCourses = (req, res) => {
-  const { courseName, courseDuration, isFormOpen, noOfQuiz, feeInRupees, leadTrainerId, assistantTrainers, teacherId, message, read, notifyToAdmin, courseId,  } = req.body;
+// const postCourses = (req, res) => {
+//   const { courseName, courseDuration, isFormOpen, noOfQuiz, feeInRupees, leadTrainerId, assistantTrainers, teacherId, message, read, notifyToAdmin, courseId, status } = req.body;
 
-  // Assuming you have properly defined the addtoCartSchema model
-  const postCourses = new coursesSchema({
+//   // Assuming you have properly defined the addtoCartSchema model
+//   const postCourses = new coursesSchema({
+//     courseName,
+//     courseDuration,
+//     isFormOpen,
+//     noOfQuiz,
+//     feeInRupees,  
+//     leadTrainerId,
+//     assistantTrainers,
+//   });
+
+//   postCourses
+//     .save()
+//     .then(savedcourses => {
+//       const pusher = new Pusher({
+//         appId: process.env.app_id,
+//         key: process.env.key,
+//         secret: process.env.secret,
+//         cluster: process.env.cluster,
+//         useTLS: true,
+//       });
+//       const newMessage = new notificationSchema({
+//         teacherId,
+//         message,
+//         read,
+//         status,
+//         notifyToAdmin,
+//         courseId,
+//       });
+//       newMessage
+//         .save()
+//         .then(async (savedMessage) => {
+//           await pusher.trigger('my-channel', 'my-event', {
+//             message: `user booked the order`,
+//           });
+//           console.log(savedMessage);
+//           res.status(200).json(savedMessage);
+//         })
+//         .catch((error) => {
+//           console.error('Error saving message to the database:', error);
+//           res.status(500).json({ message: 'Error saving message to database.', error: error.message });
+//         });
+//     })
+//     .catch(err => {
+//       res.status(500).json({
+//         Message: 'Internal Server Error',
+//         error: err.message, // Use err.message to capture the error message
+//       });
+//     });
+// };
+
+
+const postCourses = (req, res) => {
+  const { courseName, courseDuration, isFormOpen, noOfQuiz, feeInRupees, leadTrainerId, assistantTrainers } = req.body;
+
+  // Assuming you have properly defined the coursesSchema model
+  const newCourse = new coursesSchema({
     courseName,
     courseDuration,
     isFormOpen,
@@ -342,9 +397,39 @@ const postCourses = (req, res) => {
     assistantTrainers,
   });
 
-  postCourses
+  newCourse
     .save()
-    .then(savedcourses => {
+    .then(savedCourse => {
+      console.log(savedCourse);
+      res.status(200).json(savedCourse);
+    })
+    .catch(err => {
+      console.error('Error saving course to the database:', err);
+      res.status(500).json({
+        message: 'Error saving course to database.',
+        error: err.message,
+      });
+    });
+};
+
+
+
+const postNotification = (req, res) => {
+  const { teacherId, message, read, status, notifyToAdmin, courseId } = req.body;
+
+  // Assuming you have properly defined the notificationSchema model
+  const newMessage = new notificationSchema({
+    teacherId,
+    message,
+    read,
+    status,
+    notifyToAdmin,
+    courseId,
+  });
+
+  newMessage
+    .save()
+    .then(async (savedMessage) => {
       const pusher = new Pusher({
         appId: process.env.app_id,
         key: process.env.key,
@@ -352,32 +437,17 @@ const postCourses = (req, res) => {
         cluster: process.env.cluster,
         useTLS: true,
       });
-      const newMessage = new notificationSchema({
-        teacherId,
-        message,
-        read,
-        notifyToAdmin,
-        courseId,
+
+      await pusher.trigger('my-channel', 'my-event', {
+        message: `User booked the order`,
       });
-      newMessage
-        .save()
-        .then(async (savedMessage) => {
-          await pusher.trigger('my-channel', 'my-event', {
-            message: `user booked the order`,
-          });
-          console.log(savedMessage);
-          res.status(200).json(savedMessage);
-        })
-        .catch((error) => {
-          console.error('Error saving message to the database:', error);
-          res.status(500).json({ message: 'Error saving message to database.', error: error.message });
-        });
+
+      console.log(savedMessage);
+      res.status(200).json(savedMessage);
     })
-    .catch(err => {
-      res.status(500).json({
-        Message: 'Internal Server Error',
-        error: err.message, // Use err.message to capture the error message
-      });
+    .catch((error) => {
+      console.error('Error saving message to the database:', error);
+      res.status(500).json({ message: 'Error saving message to database.', error: error.message });
     });
 };
 
@@ -473,6 +543,7 @@ export default {
  postCourses,
  getAllNotifications,
  getOneNotification,
+ postNotification,
  patchNotification,
 
 };
