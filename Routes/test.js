@@ -129,8 +129,9 @@ TestRouter.get(
 
 TestRouter.post(
     '/request-live',
-    events.postCourses
+    events.postNotification
 );
+
 
 TestRouter.get(
     '/getallnotifications',
