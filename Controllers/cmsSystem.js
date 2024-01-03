@@ -6,6 +6,7 @@ import quizFormSchema from '../Models/quizFormSchema';
 import quizResultSchema from '../Models/quizResultSchema';
 import user from '../validations/user';
 import notificationSchema from '../Models/notificationSchema';
+import notificationforuserSchema from '../Models/notificationforuserSchema';
 
 require('dotenv').config();
 const addCourses = (req, res) => {
@@ -461,7 +462,7 @@ const postNotification = (req, res) => {
 
 
 
-const getAllNotifications= (req, res) => {
+const getAllNotificationsForUser= (req, res) => {
   notificationSchema.find()
     .then(notifications => {
       res.status(status.OK).send(notifications);
@@ -529,6 +530,61 @@ const patchNotification  = async (req, res) => {
 
 
 
+const postNotificationForUser = (req, res) => {
+  const { teacherId, message, read, notifyToAdmin, courseId, status } = req.body;
+
+  // Assuming you have properly defined the notificationSchema model
+  const newMessage = new notificationforuserSchema({
+    teacherId,
+    message,
+    read,
+    notifyToAdmin,
+    courseId,
+    status,
+  });
+
+  newMessage
+    .save()
+    .then(async (savedMessage) => {
+      const pusher = new Pusher({
+        appId: process.env.app_id,
+        key: process.env.key,
+        secret: process.env.secret,
+        cluster: process.env.cluster,
+        useTLS: true,
+      });
+
+      await pusher.trigger('my-channel', 'my-event', {
+        message: 'User booked the order',
+      });
+
+      console.log(savedMessage);
+      res.status(200).json(savedMessage);
+    })
+    .catch((error) => {
+      console.error('Error saving message to the database:', error);
+      res.status(500).json({ message: 'Error saving message to database.', error: error.message });
+    });
+};
+
+
+
+
+
+const getAllNotificationsForAdmin= (req, res) => {
+  notificationforuserSchema.find()
+    .then(notifications => {
+      res.status(status.OK).send(notifications);
+    })
+    .catch(err => {
+      res.status(status.INTERNAL_SERVER_ERROR).send({
+        Message: 'No Events!',
+        err,
+      });
+    });
+};
+
+
 
 
 export default {
@@ -547,9 +603,11 @@ export default {
   getOneResult,
   getAllResult,
  postCourses,
- getAllNotifications,
+getAllNotificationsForUser,
  getOneNotification,
  postNotification,
  patchNotification,
+ getAllNotificationsForAdmin,
+ postNotificationForUser,
 
 };

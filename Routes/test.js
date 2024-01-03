@@ -129,14 +129,17 @@ TestRouter.get(
 
 TestRouter.post(
     '/request-live',
+    isAdminMiddleware.isManagerOwner,
     events.postNotification
 );
 
 
 TestRouter.get(
     '/getallnotifications',
-    events.getAllNotifications
+    isLoggedInUser.isLoggedIn,
+    events.getAllNotificationsForUser
 );
+
 
 TestRouter.get(
     '/getonenotification/:id',
@@ -146,6 +149,21 @@ TestRouter.get(
 TestRouter.patch(
     '/patchnotification/:id',
     events.patchNotification
+);
+
+
+TestRouter.post(
+    '/postnotificationforuser',
+   isLoggedInUser.isLoggedIn,
+    events.postNotificationForUser
+);
+
+
+
+TestRouter.get(
+    '/getallbyadmin',
+    isAdminMiddleware.isManagerOwner,
+    events.getAllNotificationsForAdmin
 );
 
 
