@@ -168,6 +168,14 @@ TestRouter.get(
 
 
 
+TestRouter.patch(
+    '/patchuser/:id',
+    isLoggedInUser.isLoggedIn,
+    events.patchUser
+);
+
+
+
 
 
 export default TestRouter;

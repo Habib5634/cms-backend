@@ -587,6 +587,33 @@ const getAllNotificationsForAdmin= (req, res) => {
 
 
 
+const patchUser  = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find the city by its ID
+    let users = await userSchema.findById(id);
+
+    if (!users) {
+      // Return a 404 response with a message indicating that the city was not found
+      return res.status(404).json({ success: false, message: 'City not found' });
+    }
+
+    // Update the existing city's settings with the provided data
+    users.set(req.body);
+    await users.save();
+
+    res.status(200).json({ success: true, message: 'City settings updated', data: users });
+  } catch (error) {
+    console.error('Error updating city settings:', error);
+    res.status(500).json({ success: false, message: 'Failed to update city settings' });
+  }
+};
+
+
+
+
+
 export default {
 
   getallusers,
@@ -609,5 +636,6 @@ getAllNotificationsForUser,
  patchNotification,
  getAllNotificationsForAdmin,
  postNotificationForUser,
+ patchUser
 
 };
