@@ -143,12 +143,13 @@ TestRouter.get(
 
 TestRouter.get(
     '/getonenotification/:id',
-    events.getOneNotification
+    isLoggedInUser.isLoggedIn,
+    events.getOneNotificationByUser
 );
 
 TestRouter.patch(
     '/patchnotification/:id',
-    events.patchNotification
+    events.patchNotificationByUser
 );
 
 
@@ -172,6 +173,21 @@ TestRouter.patch(
     '/patchuser/:id',
     isLoggedInUser.isLoggedIn,
     events.patchUser
+);
+
+
+
+TestRouter.get(
+    '/getonebyadmin/:id',
+    isAdminMiddleware.isManagerOwner,
+    events.getOneNotificationByAdmin
+);
+
+
+TestRouter.patch(
+    '/patchnotificationbyadmin/:id',
+    isAdminMiddleware.isManagerOwner,
+    events.patchNotificationByAdmin
 );
 
 
