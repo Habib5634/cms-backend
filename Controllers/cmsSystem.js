@@ -39,6 +39,11 @@ const addCourses = (req, res) => {
       });
     });
 };
+
+
+
+
+
 const getallusers = (req, res) => {
   userSchema.find()
     .then(events => {
@@ -662,6 +667,96 @@ const patchNotificationByAdmin  = async (req, res) => {
 
 
 
+const deleteuser = (req, res) => {
+  const { id } = req.params;
+  userSchema.findByIdAndRemove(id, (err, result) => {
+      if (result) {
+          res.status(status.OK).send({
+              Message: 'User Deleted Successfully.',
+          });
+      } else {
+          res.status(status.INTERNAL_SERVER_ERROR).send({
+              Message: 'Unable to Delete.',
+              err,
+          });
+      }
+  });
+};
+
+
+
+const deleteCourse = (req, res) => {
+  const { id } = req.params;
+  coursesSchema.findByIdAndRemove(id, (err, result) => {
+      if (result) {
+          res.status(status.OK).send({
+              Message: 'course Deleted Successfully.',
+          });
+      } else {
+          res.status(status.INTERNAL_SERVER_ERROR).send({
+              Message: 'Unable to Delete.',
+              err,
+          });
+      }
+  });
+};
+
+
+const deleteQuizForm = (req, res) => {
+  const { id } = req.params;
+  quizFormSchema.findByIdAndRemove(id, (err, result) => {
+      if (result) {
+          res.status(status.OK).send({
+              Message: 'Quiz Form Deleted Successfully.',
+          });
+      } else {
+          res.status(status.INTERNAL_SERVER_ERROR).send({
+              Message: 'Unable to Delete.',
+              err,
+          });
+      }
+  });
+};
+
+
+
+const deleteNotificationsByAdmin = (req, res) => {
+  const { id } = req.params;
+  notificationSchema.findByIdAndRemove(id, (err, result) => {
+      if (result) {
+          res.status(status.OK).send({
+              Message: 'Admin Notification Deleted Successfully.',
+          });
+      } else {
+          res.status(status.INTERNAL_SERVER_ERROR).send({
+              Message: 'Unable to Delete.',
+              err,
+          });
+      }
+  });
+};
+
+
+
+
+const deleteNotificationsByUser = (req, res) => {
+  const { id } = req.params;
+  notificationforuserSchema.findByIdAndRemove(id, (err, result) => {
+      if (result) {
+          res.status(status.OK).send({
+              Message: 'User Notification Deleted Successfully.',
+          });
+      } else {
+          res.status(status.INTERNAL_SERVER_ERROR).send({
+              Message: 'Unable to Delete.',
+              err,
+          });
+      }
+  });
+};
+
+
+
 
 
 
@@ -691,5 +786,10 @@ getAllNotificationsForUser,
  patchUser,
  getOneNotificationByAdmin,
  patchNotificationByAdmin,
+ deleteuser,
+ deleteCourse,
+ deleteQuizForm,
+ deleteNotificationsByAdmin,
+ deleteNotificationsByUser,
 
 };

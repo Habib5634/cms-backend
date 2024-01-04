@@ -193,5 +193,37 @@ TestRouter.patch(
 
 
 
+TestRouter.delete(
+    '/deleteuser/:id',
+    events.deleteuser,
+);
+
+
+TestRouter.delete(
+    '/deletecourse/:id',
+    events.deleteCourse
+);
+
+
+TestRouter.delete(
+    '/deletequizform/:id',
+    events.deleteQuizForm
+);
+
+
+TestRouter.delete(
+    '/deleteadminnotification/:id',
+    events.deleteNotificationsByAdmin
+);
+
+
+TestRouter.delete(
+    '/deleteusernotification/:id',
+    events.deleteNotificationsByUser
+);
+
+
+
+
 
 export default TestRouter;
