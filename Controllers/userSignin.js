@@ -14,14 +14,15 @@ import Model from '../Models/Model';
 // FacebookStrategy = FacebookSt.Strategy;
 
 const createToken = (user, res, next) => {
-    const { id, email, firstName, lastName, role, course } = user;
+    const { id, email, firstName, lastName, role, course,enrolledCourses } = user;
     const payload = {
         _id:id,
         email,
         firstName,
         lastName,
         role,
-        course
+        course,
+        enrolledCourses
         
 
     };
@@ -63,7 +64,8 @@ const userSignIn = (req, res, next) => {
                         firstName:user.firstName,
                         lastName:user.lastName,
                         role: user.role ,
-                        course:user.course
+                        course:user.course,
+                        enrolledCourses:user.enrolledCourses
                     };
 
                     createToken(user, res, next);

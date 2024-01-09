@@ -72,7 +72,7 @@ TestRouter.patch(
 
 TestRouter.get(
     '/getoneuser/:id',
-    isAdminMiddleware.isManagerOwner,
+    // isAdminMiddleware.isManagerOwner,
     events.getOneuser
 );
 
